@@ -15,8 +15,82 @@ const CONTACT_INFO = {
   recruitPeriod: '매년 2~3월',
 };
 
+// ========================================
+// 파트별 상세 정보 (클릭 시 모달에 표시)
+// ========================================
+const PART_DETAILS = {
+  design: {
+    icon: '💡',
+    title: '기획/디자인',
+    subtitle: 'Planning & Design',
+    description: '사용자 중심의 서비스를 기획하고, 시각적으로 구현합니다.',
+    skills: ['Figma', 'Adobe XD', 'Notion', 'Miro'],
+    activities: [
+      '서비스 기획 및 사용자 리서치',
+      'UI/UX 디자인 및 프로토타이핑',
+      '디자인 시스템 구축',
+      '팀 프로젝트 기획 문서 작성',
+    ],
+    curriculum: [
+      '디자인 씽킹 워크샵',
+      'Figma 기초부터 실전까지',
+      '사용자 경험(UX) 설계',
+      '프로토타이핑 및 인터랙션',
+    ],
+  },
+  backend: {
+    icon: '💻',
+    title: '백엔드',
+    subtitle: 'Backend Development',
+    description: '안정적인 서버와 데이터베이스로 서비스의 핵심을 구축합니다.',
+    skills: ['Java', 'Spring Boot', 'MySQL', 'AWS'],
+    activities: [
+      'RESTful API 설계 및 개발',
+      '데이터베이스 모델링',
+      '서버 배포 및 운영',
+      '보안 및 성능 최적화',
+    ],
+    curriculum: [
+      'Java 프로그래밍 기초',
+      'Spring Boot 웹 개발',
+      'JPA와 데이터베이스',
+      'AWS 클라우드 배포',
+    ],
+  },
+  frontend: {
+    icon: '🤝',
+    title: '프론트엔드',
+    subtitle: 'Frontend Development',
+    description: '사용자와 직접 만나는 인터페이스를 개발합니다.',
+    skills: ['React', 'JavaScript', 'HTML/CSS', 'TypeScript'],
+    activities: [
+      '반응형 웹 UI 개발',
+      '사용자 인터랙션 구현',
+      'API 연동 및 상태관리',
+      '웹 성능 최적화',
+    ],
+    curriculum: [
+      'HTML/CSS 기초',
+      'JavaScript 핵심 문법',
+      'React 컴포넌트 개발',
+      '실전 프로젝트 개발',
+    ],
+  },
+};
+
 function App() {
   const [introComplete, setIntroComplete] = useState(false);
+  const [selectedPart, setSelectedPart] = useState(null);
+
+  const openPartModal = (partKey) => {
+    setSelectedPart(partKey);
+    document.body.style.overflow = 'hidden';
+  };
+
+  const closePartModal = () => {
+    setSelectedPart(null);
+    document.body.style.overflow = '';
+  };
 
   const handleIntroComplete = () => {
     setIntroComplete(true);
@@ -63,29 +137,50 @@ function App() {
             </div>
 
             <div className="about-cards">
-              <article className="about-card">
+              <article 
+                className="about-card about-card-clickable"
+                onClick={() => openPartModal('design')}
+                role="button"
+                tabIndex={0}
+                onKeyDown={(e) => e.key === 'Enter' && openPartModal('design')}
+              >
                 <div className="about-card-icon">💡</div>
                 <h3 className="about-card-title">기획/디자인</h3>
                 <p className="about-card-text">
                   FIGMA와 같은 툴을 활용해
                   아이디어를 시각화합니다.
                 </p>
+                <span className="about-card-more">자세히 보기 →</span>
               </article>
-              <article className="about-card">
+              <article 
+                className="about-card about-card-clickable"
+                onClick={() => openPartModal('backend')}
+                role="button"
+                tabIndex={0}
+                onKeyDown={(e) => e.key === 'Enter' && openPartModal('backend')}
+              >
                 <div className="about-card-icon">💻</div>
                 <h3 className="about-card-title">백엔드</h3>
                 <p className="about-card-text">
                   서버와 데이터베이스를 구축해
                   안정적인 서비스를 만듭니다.
                 </p>
+                <span className="about-card-more">자세히 보기 →</span>
               </article>
-              <article className="about-card">
+              <article 
+                className="about-card about-card-clickable"
+                onClick={() => openPartModal('frontend')}
+                role="button"
+                tabIndex={0}
+                onKeyDown={(e) => e.key === 'Enter' && openPartModal('frontend')}
+              >
                 <div className="about-card-icon">🤝</div>
                 <h3 className="about-card-title">프론트엔드</h3>
                 <p className="about-card-text">
                   사용자 친화적인 UI를 개발해
                   최적의 경험을 제공합니다.
                 </p>
+                <span className="about-card-more">자세히 보기 →</span>
               </article>
             </div>
           </div>
@@ -272,6 +367,56 @@ function App() {
         </section>
 
       </main>
+
+      {/* 파트 상세 모달 */}
+      {selectedPart && PART_DETAILS[selectedPart] && (
+        <div className="part-modal-overlay" onClick={closePartModal}>
+          <div className="part-modal" onClick={(e) => e.stopPropagation()}>
+            <button className="part-modal-close" onClick={closePartModal}>
+              ✕
+            </button>
+            
+            <div className="part-modal-header">
+              <span className="part-modal-icon">{PART_DETAILS[selectedPart].icon}</span>
+              <div>
+                <h2 className="part-modal-title">{PART_DETAILS[selectedPart].title}</h2>
+                <p className="part-modal-subtitle">{PART_DETAILS[selectedPart].subtitle}</p>
+              </div>
+            </div>
+            
+            <p className="part-modal-description">
+              {PART_DETAILS[selectedPart].description}
+            </p>
+            
+            <div className="part-modal-section">
+              <h3 className="part-modal-section-title">🛠️ 사용 기술/도구</h3>
+              <div className="part-modal-skills">
+                {PART_DETAILS[selectedPart].skills.map((skill, idx) => (
+                  <span key={idx} className="part-modal-skill">{skill}</span>
+                ))}
+              </div>
+            </div>
+            
+            <div className="part-modal-section">
+              <h3 className="part-modal-section-title">📋 주요 활동</h3>
+              <ul className="part-modal-list">
+                {PART_DETAILS[selectedPart].activities.map((activity, idx) => (
+                  <li key={idx}>{activity}</li>
+                ))}
+              </ul>
+            </div>
+            
+            <div className="part-modal-section">
+              <h3 className="part-modal-section-title">📚 커리큘럼</h3>
+              <ul className="part-modal-list">
+                {PART_DETAILS[selectedPart].curriculum.map((item, idx) => (
+                  <li key={idx}>{item}</li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* 푸터 */}
       <footer className="footer">
