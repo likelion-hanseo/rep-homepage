@@ -102,14 +102,65 @@ function App() {
               <div className="timeline-item">
                 <div className="timeline-marker"></div>
                 <div className="timeline-content">
-                  <span className="timeline-date">2026.02</span>
+                  <span className="timeline-date">2025.03</span>
                   <h3 className="timeline-title">
-                    멋쟁이사자처럼 한서대 14기 시작
+                    한서대 멋사 13기 출범
                     <span className="timeline-badge">🚀 시작</span>
                   </h3>
-                  
                   <p className="timeline-text">
-                    새로운 기수의 시작과 함께 멋쟁이사자처럼 한서대 14기가 출범했습니다!
+                    멋쟁이사자처럼 본부 승인 후 한서대학교 공식 지부 설립
+                  </p>
+                </div>
+              </div>
+
+              <div className="timeline-item">
+                <div className="timeline-marker"></div>
+                <div className="timeline-content">
+                  <span className="timeline-date">2025.05</span>
+                  <h3 className="timeline-title">중앙 아이디어톤 본선 진출</h3>
+                  <p className="timeline-text">
+                    한서대학교 멋쟁이사자처럼 13기 중앙 아이디어톤 본선 진출, 260개 팀 중 상위 14팀 선정
+                  </p>
+                </div>
+              </div>
+
+              <div className="timeline-item">
+                <div className="timeline-marker"></div>
+                <div className="timeline-content">
+                  <span className="timeline-date">2025.08</span>
+                  <h3 className="timeline-title">
+                    13기 중앙 해커톤 2차 예선 2팀 진출
+                  </h3>
+                  <p className="timeline-text">
+                    수 많은 대학의 수 많은 팀을 제치고 한서대 멋사 13기에서 2개 팀이 중앙 해커톤 2차 예선에 진출!!
+                  </p>
+                </div>
+              </div>
+
+              <div className="timeline-item">
+                <div className="timeline-marker"></div>
+                <div className="timeline-content">
+                  <span className="timeline-date">2025.09</span>
+                  <h3 className="timeline-title">
+                    한서대 축제 데이팅 앱 너랑나랑 출시
+                    <span className="timeline-badge">🎉 행사</span>
+                  </h3>
+                  <p className="timeline-text">
+                    교내 축제 기간 동안 사용할 수 있는 데이팅 앱 '너랑나랑' 출시 및 운영(가입자 수 1300명 돌파)
+                  </p>
+                </div>
+              </div>
+
+              <div className="timeline-item">
+                <div className="timeline-marker"></div>
+                <div className="timeline-content">
+                  <span className="timeline-date">2025.11</span>
+                  <h3 className="timeline-title">
+                    관광데이터 활용 공모전 최우수상 및 우수상 수상
+                    <span className="timeline-badge">🏆 수상</span>
+                  </h3>
+                  <p className="timeline-text">
+                    한국관광공사X카카오 주관 관광데이터 활용 공모전에서 344개 팀 중 상위 6팀 선정된 1팀 최우수상, 2팀 우수상 수상
                   </p>
                 </div>
               </div>
@@ -132,65 +183,14 @@ function App() {
               <div className="timeline-item">
                 <div className="timeline-marker"></div>
                 <div className="timeline-content">
-                  <span className="timeline-date">2025.11</span>
+                  <span className="timeline-date">2026.02</span>
                   <h3 className="timeline-title">
-                    관광데이터 활용 공모전 최우수상 및 우수상 수상
-                    <span className="timeline-badge">🏆 수상</span>
-                  </h3>
-                  <p className="timeline-text">
-                    한국관광공사X카카오 주관 관광데이터 활용 공모전에서 344개 팀 중 상위 6팀 선정된 1팀 최우수상, 2팀 우수상 수상
-                  </p>
-                </div>
-              </div>
-
-              <div className="timeline-item">
-                <div className="timeline-marker"></div>
-                <div className="timeline-content">
-                  <span className="timeline-date">2025.09</span>
-                  <h3 className="timeline-title">
-                    한서대 축제 데이팅 앱 너랑나랑 출시
-                    <span className="timeline-badge">🎉 행사</span>
-                  </h3>
-                  <p className="timeline-text">
-                    교내 축제 기간 동안 사용할 수 있는 데이팅 앱 '너랑나랑' 출시 및 운영(가입자 수 1300명 돌파)
-                  </p>
-                </div>
-              </div>
-
-              <div className="timeline-item">
-                <div className="timeline-marker"></div>
-                <div className="timeline-content">
-                  <span className="timeline-date">2025.08</span>
-                  <h3 className="timeline-title">
-                    13기 중앙 해커톤 2차 예선 2팀 진출
-                  </h3>
-                  <p className="timeline-text">
-                    수 많은 대학의 수 많은 팀을 제치고 한서대 멋사 13기에서 2개 팀이 중앙 해커톤 2차 예선에 진출!!
-                  </p>
-                </div>
-              </div>
-
-              <div className="timeline-item">
-                <div className="timeline-marker"></div>
-                <div className="timeline-content">
-                  <span className="timeline-date">2025.05</span>
-                  <h3 className="timeline-title">중앙 아이디어톤 본선 진출</h3>
-                  <p className="timeline-text">
-                    한서대학교 멋쟁이사자처럼 13기 중앙 아이디어톤 본선 진출, 260개 팀 중 상위 14팀 선정
-                  </p>
-                </div>
-              </div>
-
-              <div className="timeline-item">
-                <div className="timeline-marker"></div>
-                <div className="timeline-content">
-                  <span className="timeline-date">2025.03</span>
-                  <h3 className="timeline-title">
-                    한서대 멋사 13기 출범
+                    멋쟁이사자처럼 한서대 14기 시작
                     <span className="timeline-badge">🚀 시작</span>
                   </h3>
+                  
                   <p className="timeline-text">
-                    멋쟁이사자처럼 본부 승인 후 한서대학교 공식 지부 설립
+                    새로운 기수의 시작과 함께 멋쟁이사자처럼 한서대 14기가 출범했습니다!
                   </p>
                 </div>
               </div>
