@@ -62,18 +62,18 @@ const convertDriveLink = (rawLink) => {
 // 원본 Google Drive 링크 배열
 // ========================================
 const RAW_GALLERY_LINKS = [
+  'https://drive.google.com/file/d/1k4nG0xWjgE3LINfsEi6m417zM3Jitnr1/view',
   'https://drive.google.com/file/d/1tNgApbwszPyGIxkNA56XZWXGxReHHyBm/view',
-  'https://drive.google.com/file/d/1UyMKLq_AL4hHs26xEexArV4CT91WrHU9/view',
+  'https://drive.google.com/file/d/1a8Ny5Eb5VCEKj6tZ1eKK8uizrrYgXGZA/view',
+  'https://drive.google.com/file/d/12PrBYLryxU1Y8Tb-sr2L2ihSAuYS1gFh/view',
   'https://drive.google.com/file/d/1dg4hf-Gf3718MFMuHrF2VkUrD16uoh_P/view',
-  'https://drive.google.com/file/d/1quSFLq3-RWAexspfM9DWzfejOmWh_XUD/view',
   'https://drive.google.com/file/d/1lxgvqCyNBW9Yw7-cJmYaMPRu-azC0Noz/view',
-  'https://drive.google.com/file/d/1wrpKCtntYy22ApMUzm2ml_frteOK3Kve/view',
-  'https://drive.google.com/file/d/1ceUjQeHFQeAL23O8Bj9-ZdW0r9XRet7K/view',
-  'https://drive.google.com/file/d/1Qk0veZg4jniogFVdkWBGwdq9vXD0iHeG/view',
+  'https://drive.google.com/file/d/1R0FWEXaJ4WxD71qoBHKXamqTNEjrs1aG/view',
+  'https://drive.google.com/file/d/1EwmtFeUoLIMCAKg4Y_HWY0ajH1JWTRsi/view',
   'https://drive.google.com/file/d/177p_b9PpEKLT14r-Be0Q95jafsq-xke3/view',
-  'https://drive.google.com/file/d/1QLHXcDZSt5en7uuQ-Qo0flahZtu9dzIl/view',
-  'https://drive.google.com/file/d/1dIhIl70J6vgK6Buc7T4uqqyekp-dLexJ/view',
-  'https://drive.google.com/file/d/1EMylb0oHqd54v_4F9P3iqLUjYHVgouvr/view',
+  'https://drive.google.com/file/d/1n8Y94j1iQo1wpPnjL5sFiHNtTYKLNNYK/view',
+  'https://drive.google.com/file/d/1GBYIHpevvPpX9f_hBQK6HMSRBo2NdHqd/view',
+  'https://drive.google.com/file/d/1hVmXyGryyret1naKDnxA6cVCQlIFnwtw/view',
 ];
 
 // 변환된 이미지 배열 생성
