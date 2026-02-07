@@ -1111,6 +1111,87 @@ button:focus-visible {
   font-size: 10px;
 }
 
+/* 클릭 가능한 갤러리 카드 */
+.gallery-card-clickable {
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.gallery-card-clickable:hover {
+  transform: scale(1.02);
+}
+
+.gallery-card-clickable:focus-visible {
+  outline: 2px solid #FF770F;
+  outline-offset: 2px;
+  border-radius: 8px;
+}
+
+/* 갤러리 이미지 확대 모달 */
+.gallery-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  padding: 20px;
+  animation: fadeIn 0.2s ease;
+}
+
+.gallery-modal {
+  position: relative;
+  max-width: 90vw;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  animation: zoomIn 0.3s ease;
+}
+
+@keyframes zoomIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.gallery-modal-close {
+  position: absolute;
+  top: -40px;
+  right: 0;
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 28px;
+  cursor: pointer;
+  padding: 8px;
+  line-height: 1;
+  transition: color 0.2s ease;
+  z-index: 10;
+}
+
+.gallery-modal-close:hover {
+  color: #ffffff;
+}
+
+.gallery-modal-image {
+  max-width: 100%;
+  max-height: 80vh;
+  object-fit: contain;
+  border-radius: 8px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+}
+
+.gallery-modal-caption {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 14px;
+  margin-top: 16px;
+  text-align: center;
+}
+
 /* Gallery 반응형 */
 @media (max-width: 900px) {
   .gallery-grid {
@@ -1192,5 +1273,24 @@ button:focus-visible {
 
   .gallery-placeholder-text {
     font-size: 10px;
+  }
+
+  /* 모바일 모달 */
+  .gallery-modal-overlay {
+    padding: 12px;
+  }
+
+  .gallery-modal-close {
+    top: -36px;
+    font-size: 24px;
+  }
+
+  .gallery-modal-image {
+    max-height: 70vh;
+  }
+
+  .gallery-modal-caption {
+    font-size: 12px;
+    margin-top: 12px;
   }
 }

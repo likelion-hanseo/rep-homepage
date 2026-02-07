@@ -101,7 +101,7 @@ const ImagePlaceholder = ({ alt }) => (
 // ========================================
 // 갤러리 카드 컴포넌트
 // ========================================
-const GalleryCard = ({ image, onError }) => {
+const GalleryCard = ({ image, onError, onClick }) => {
   const [hasError, setHasError] = useState(false);
 
   const handleImageError = useCallback(() => {
@@ -118,7 +118,13 @@ const GalleryCard = ({ image, onError }) => {
   }
 
   return (
-    <div className="gallery-card-inner">
+    <div 
+      className="gallery-card-inner gallery-card-clickable"
+      onClick={() => onClick && onClick(image)}
+      role="button"
+      tabIndex={0}
+      onKeyDown={(e) => e.key === 'Enter' && onClick && onClick(image)}
+    >
       <img
         src={image.url}
         alt={image.alt}
@@ -139,6 +145,31 @@ const Gallery = () => {
   
   // 오버레이 표시 여부 (갤러리 섹션 내부 + progress < 0.75 일 때만)
   const [showOverlay, setShowOverlay] = useState(false);
+  
+  // 이미지 모달 상태
+  const [selectedImage, setSelectedImage] = useState(null);
+
+  // 모달 열기/닫기
+  const openImageModal = useCallback((image) => {
+    setSelectedImage(image);
+    document.body.style.overflow = 'hidden';
+  }, []);
+
+  const closeImageModal = useCallback(() => {
+    setSelectedImage(null);
+    document.body.style.overflow = '';
+  }, []);
+
+  // ESC 키로 모달 닫기
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape' && selectedImage) {
+        closeImageModal();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [selectedImage, closeImageModal]);
 
   // 그리드 1번 카드의 stage-local 좌표 (실시간 계산)
   const [card1Position, setCard1Position] = useState({
@@ -319,7 +350,7 @@ const Gallery = () => {
                   scale: firstCardScale,
                 }}
               >
-                <GalleryCard image={heroImage} />
+                <GalleryCard image={heroImage} onClick={openImageModal} />
               </motion.div>
 
               {/* 나머지 11개 이미지들 */}
@@ -332,7 +363,7 @@ const Gallery = () => {
                     scale: gridScale,
                   }}
                 >
-                  <GalleryCard image={image} />
+                  <GalleryCard image={image} onClick={openImageModal} />
                 </motion.div>
               ))}
 
@@ -353,7 +384,7 @@ const Gallery = () => {
                 }}
               >
                 <div className="gallery-hero-card">
-                  <GalleryCard image={heroImage} />
+                  <GalleryCard image={heroImage} onClick={openImageModal} />
                 </div>
               </motion.div>
             )}
@@ -362,6 +393,23 @@ const Gallery = () => {
 
         </div>
       </div>
+
+      {/* 이미지 확대 모달 */}
+      {selectedImage && (
+        <div className="gallery-modal-overlay" onClick={closeImageModal}>
+          <div className="gallery-modal" onClick={(e) => e.stopPropagation()}>
+            <button className="gallery-modal-close" onClick={closeImageModal}>
+              ✕
+            </button>
+            <img 
+              src={selectedImage.url} 
+              alt={selectedImage.alt}
+              className="gallery-modal-image"
+            />
+            <p className="gallery-modal-caption">{selectedImage.alt}</p>
+          </div>
+        </div>
+      )}
     </section>
   );
 };
