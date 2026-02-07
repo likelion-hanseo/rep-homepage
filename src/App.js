@@ -24,7 +24,7 @@ const PART_DETAILS = {
     title: '기획/디자인',
     subtitle: 'Planning & Design',
     description: '사용자 중심의 서비스를 기획하고, 시각적으로 구현합니다.',
-    skills: ['Figma', 'Adobe XD', 'Notion', 'Miro'],
+    skills: ['Figma', 'Illustrator', 'photoshop', 'mural'],
     activities: [
       '서비스 기획 및 사용자 리서치',
       'UI/UX 디자인 및 프로토타이핑',
