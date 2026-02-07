@@ -1130,30 +1130,36 @@ button:focus-visible {
 
 @media (max-width: 600px) {
   .gallery-scroll-container {
-    height: 220vh;
+    height: 200vh; /* 모바일 스크롤 구간 */
   }
 
   .gallery-sticky {
     top: 60px;
     height: calc(100vh - 60px);
     padding: 16px 16px 12px;
+    overflow-y: auto; /* 내부 스크롤 허용 */
+    overflow-x: hidden;
   }
 
   .gallery-stage {
-    /* 모바일: 더 넓은 비율 허용 (이미지 짤림 방지) */
+    /* 모바일: 2열 6행 그리드를 담을 수 있도록 */
     width: min(96vw, 100%);
-    aspect-ratio: 1 / 1.1; /* 세로로 약간 더 길게 */
-    max-height: min(75vh, 500px);
+    aspect-ratio: 2 / 3; /* 세로로 더 길게 (2:3 비율) */
+    max-height: none; /* 높이 제한 제거 */
     border-radius: 12px;
+    overflow: visible;
   }
 
   .gallery-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 10px;
+    height: 100%;
+    align-content: start;
   }
 
   .gallery-card {
     border-radius: 8px;
+    aspect-ratio: 1 / 1;
   }
 
   .gallery-card-inner {
