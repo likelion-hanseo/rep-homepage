@@ -332,7 +332,7 @@ const Gallery = () => {
             style={{ opacity: titleOpacity }}
           >
             <h2 className="section-title">갤러리</h2>
-            <p className="section-text">우리의 활동 모습을 사진으로 만나보세요.</p>
+            <p className="section-text">저희의 활동 모습을 사진으로 만나보세요. (PC 버전에 최적화 되어 있습니다.)</p>
           </motion.div>
 
           {/* B) 갤러리 스테이지: 그리드 + 오버레이가 놓일 무대 */}
