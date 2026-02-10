@@ -2,6 +2,47 @@ import React, { useRef, useState, useCallback, useEffect } from 'react';
 import { motion, useScroll, useTransform, useMotionValueEvent } from 'framer-motion';
 
 // ========================================
+// 화면 크기 감지 훅
+// ========================================
+const useIsMobile = (breakpoint = 767) => {
+  const [isMobile, setIsMobile] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return window.innerWidth <= breakpoint;
+    }
+    return false;
+  });
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia(`(max-width: ${breakpoint}px)`);
+    
+    const handleChange = (e) => {
+      setIsMobile(e.matches);
+    };
+
+    // 초기값 설정
+    setIsMobile(mediaQuery.matches);
+
+    // 리스너 등록
+    if (mediaQuery.addEventListener) {
+      mediaQuery.addEventListener('change', handleChange);
+    } else {
+      // Safari 구버전 대응
+      mediaQuery.addListener(handleChange);
+    }
+
+    return () => {
+      if (mediaQuery.removeEventListener) {
+        mediaQuery.removeEventListener('change', handleChange);
+      } else {
+        mediaQuery.removeListener(handleChange);
+      }
+    };
+  }, [breakpoint]);
+
+  return isMobile;
+};
+
+// ========================================
 // Google Drive 링크 변환 유틸리티
 // ========================================
 
@@ -136,40 +177,87 @@ const GalleryCard = ({ image, onError, onClick }) => {
 };
 
 // ========================================
-// Gallery 메인 컴포넌트
+// 모바일 갤러리 (스와이프 캐러셀)
 // ========================================
-const Gallery = () => {
+const MobileGallery = ({ images, onImageClick }) => {
+  const trackRef = useRef(null);
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  // 스크롤 위치에 따른 현재 인덱스 계산
+  const handleScroll = useCallback(() => {
+    if (!trackRef.current) return;
+    
+    const track = trackRef.current;
+    const scrollLeft = track.scrollLeft;
+    const cardWidth = track.firstElementChild?.offsetWidth || 0;
+    const gap = 12; // gap: 12px
+    
+    if (cardWidth > 0) {
+      const newIndex = Math.round(scrollLeft / (cardWidth + gap));
+      setActiveIndex(Math.min(Math.max(0, newIndex), images.length - 1));
+    }
+  }, [images.length]);
+
+  // 인디케이터 클릭 시 해당 카드로 스크롤
+  const scrollToIndex = useCallback((index) => {
+    if (!trackRef.current) return;
+    
+    const track = trackRef.current;
+    const cardWidth = track.firstElementChild?.offsetWidth || 0;
+    const gap = 12;
+    
+    track.scrollTo({
+      left: index * (cardWidth + gap),
+      behavior: 'smooth'
+    });
+  }, []);
+
+  return (
+    <section id="gallery" className="gallery-section gallery-section-mobile">
+      {/* 모바일 갤러리 헤더 */}
+      <div className="gallery-mobile-header">
+        <h2 className="section-title">갤러리</h2>
+        <p className="section-text">저희의 활동 모습을 사진으로 만나보세요.</p>
+      </div>
+
+      {/* 스와이프 트랙 */}
+      <div 
+        className="gallery-mobile-track"
+        ref={trackRef}
+        onScroll={handleScroll}
+      >
+        {images.map((image) => (
+          <div key={image.id} className="gallery-mobile-card">
+            <GalleryCard image={image} onClick={onImageClick} />
+          </div>
+        ))}
+      </div>
+
+      {/* 인디케이터 */}
+      <div className="gallery-mobile-indicators">
+        {images.map((_, index) => (
+          <button
+            key={index}
+            className={`gallery-mobile-dot ${index === activeIndex ? 'active' : ''}`}
+            onClick={() => scrollToIndex(index)}
+            aria-label={`사진 ${index + 1}로 이동`}
+          />
+        ))}
+      </div>
+    </section>
+  );
+};
+
+// ========================================
+// Gallery 메인 컴포넌트 (PC 버전)
+// ========================================
+const PCGallery = ({ onImageClick }) => {
   const containerRef = useRef(null);
   const stageRef = useRef(null);
   const firstCardRef = useRef(null);
   
   // 오버레이 표시 여부 (갤러리 섹션 내부 + progress < 0.75 일 때만)
   const [showOverlay, setShowOverlay] = useState(false);
-  
-  // 이미지 모달 상태
-  const [selectedImage, setSelectedImage] = useState(null);
-
-  // 모달 열기/닫기
-  const openImageModal = useCallback((image) => {
-    setSelectedImage(image);
-    document.body.style.overflow = 'hidden';
-  }, []);
-
-  const closeImageModal = useCallback(() => {
-    setSelectedImage(null);
-    document.body.style.overflow = '';
-  }, []);
-
-  // ESC 키로 모달 닫기
-  useEffect(() => {
-    const handleKeyDown = (e) => {
-      if (e.key === 'Escape' && selectedImage) {
-        closeImageModal();
-      }
-    };
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [selectedImage, closeImageModal]);
 
   // 그리드 1번 카드의 stage-local 좌표 (실시간 계산)
   const [card1Position, setCard1Position] = useState({
@@ -350,7 +438,7 @@ const Gallery = () => {
                   scale: firstCardScale,
                 }}
               >
-                <GalleryCard image={heroImage} onClick={openImageModal} />
+                <GalleryCard image={heroImage} onClick={onImageClick} />
               </motion.div>
 
               {/* 나머지 11개 이미지들 */}
@@ -363,7 +451,7 @@ const Gallery = () => {
                     scale: gridScale,
                   }}
                 >
-                  <GalleryCard image={image} onClick={openImageModal} />
+                  <GalleryCard image={image} onClick={onImageClick} />
                 </motion.div>
               ))}
 
@@ -384,7 +472,7 @@ const Gallery = () => {
                 }}
               >
                 <div className="gallery-hero-card">
-                  <GalleryCard image={heroImage} onClick={openImageModal} />
+                  <GalleryCard image={heroImage} onClick={onImageClick} />
                 </div>
               </motion.div>
             )}
@@ -393,8 +481,51 @@ const Gallery = () => {
 
         </div>
       </div>
+    </section>
+  );
+};
 
-      {/* 이미지 확대 모달 */}
+// ========================================
+// Gallery 래퍼 컴포넌트 (PC/Mobile 분기 + 모달)
+// ========================================
+const Gallery = () => {
+  const isMobile = useIsMobile(767);
+  
+  // 이미지 모달 상태
+  const [selectedImage, setSelectedImage] = useState(null);
+
+  // 모달 열기/닫기
+  const openImageModal = useCallback((image) => {
+    setSelectedImage(image);
+    document.body.style.overflow = 'hidden';
+  }, []);
+
+  const closeImageModal = useCallback(() => {
+    setSelectedImage(null);
+    document.body.style.overflow = '';
+  }, []);
+
+  // ESC 키로 모달 닫기
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape' && selectedImage) {
+        closeImageModal();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [selectedImage, closeImageModal]);
+
+  return (
+    <>
+      {/* PC 또는 Mobile 갤러리 렌더링 */}
+      {isMobile ? (
+        <MobileGallery images={GALLERY_IMAGES} onImageClick={openImageModal} />
+      ) : (
+        <PCGallery onImageClick={openImageModal} />
+      )}
+
+      {/* 이미지 확대 모달 (공통) */}
       {selectedImage && (
         <div className="gallery-modal-overlay" onClick={closeImageModal}>
           <div className="gallery-modal" onClick={(e) => e.stopPropagation()}>
@@ -410,7 +541,7 @@ const Gallery = () => {
           </div>
         </div>
       )}
-    </section>
+    </>
   );
 };
 
