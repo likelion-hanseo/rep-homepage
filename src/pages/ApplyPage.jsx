@@ -360,8 +360,6 @@ const SubmitSuccess = () => {
 // ApplyPage 메인 컴포넌트
 // ========================================
 const ApplyPage = () => {
-  const navigate = useNavigate();
-  
   // 폼 데이터 상태
   const [formData, setFormData] = useState(() => loadApplicationData());
   const [currentStep, setCurrentStep] = useState(() => {

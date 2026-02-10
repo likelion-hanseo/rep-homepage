@@ -54,8 +54,10 @@ export const clearApplicationData = () => {
   }
 };
 
-export default {
+const applicationStorage = {
   load: loadApplicationData,
   save: saveApplicationData,
   clear: clearApplicationData,
 };
+
+export default applicationStorage;
