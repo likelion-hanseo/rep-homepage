@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 
 const Logo = ({ style, className }) => (
@@ -124,6 +125,9 @@ const Header = ({ isVisible }) => {
             {label}
           </a>
         ))}
+        <Link to="/apply" className="header-nav-link header-nav-apply">
+          지원하기
+        </Link>
       </nav>
     </motion.header>
   );

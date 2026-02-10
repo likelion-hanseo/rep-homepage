@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
+import { Routes, Route, Link, useLocation } from 'react-router-dom';
 import './App.css';
 import Intro from './components/Intro';
 import Header from './components/Header';
 import Gallery from './components/Gallery';
+import ApplyPage from './pages/ApplyPage';
 
 // ========================================
 // 연락처 정보 상수 (수정 용이하게 분리)
@@ -79,6 +81,18 @@ const PART_DETAILS = {
 };
 
 function App() {
+  return (
+    <Routes>
+      <Route path="/" element={<HomePage />} />
+      <Route path="/apply" element={<ApplyPage />} />
+    </Routes>
+  );
+}
+
+// ========================================
+// HomePage 컴포넌트 (기존 랜딩 페이지)
+// ========================================
+function HomePage() {
   const [introComplete, setIntroComplete] = useState(false);
   const [selectedPart, setSelectedPart] = useState(null);
 
@@ -311,12 +325,12 @@ function App() {
               </p>
               
               <div className="contact-cta-group">
-                <a 
-                  href={`mailto:${CONTACT_INFO.email}`}
+                <Link 
+                  to="/apply"
                   className="contact-cta contact-cta-primary"
                 >
-                  📧 메일 보내기
-                </a>
+                  🦁 지원하기
+                </Link>
               </div>
             </div>
 
