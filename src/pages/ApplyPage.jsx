@@ -151,11 +151,20 @@ const Step3ContactInfo = ({ formData, updateFormData, onPrev, onNext }) => {
   const handleNext = () => {
     const newErrors = { contact: '', studentNo: '' };
 
-    if (!formData.contact.trim()) {
+    // 연락처 검증 (숫자만 10-11자리)
+    const contactValue = formData.contact.trim();
+    if (!contactValue) {
       newErrors.contact = '연락처를 입력해주세요.';
+    } else if (!/^[0-9]{10,11}$/.test(contactValue)) {
+      newErrors.contact = '숫자만 10-11자리로 입력해주세요. (예: 01012345678)';
     }
-    if (!formData.studentNo.trim()) {
+
+    // 학번 검증 (20으로 시작하는 9자리 숫자)
+    const studentNoValue = formData.studentNo.trim();
+    if (!studentNoValue) {
       newErrors.studentNo = '학번을 입력해주세요.';
+    } else if (!/^20[0-9]{7}$/.test(studentNoValue)) {
+      newErrors.studentNo = '학번은 20으로 시작하는 9자리 숫자여야 합니다. (예: 202412345)';
     }
 
     setErrors(newErrors);
@@ -175,11 +184,16 @@ const Step3ContactInfo = ({ formData, updateFormData, onPrev, onNext }) => {
         <input
           type="tel"
           className={`apply-input ${errors.contact ? 'apply-input--error' : ''}`}
-          placeholder="010-1234-5678"
+          placeholder="01012345678 (- 없이 숫자만)"
           value={formData.contact}
-          onChange={(e) => updateFormData('contact', e.target.value)}
+          onChange={(e) => {
+            const value = e.target.value.replace(/[^0-9]/g, '');
+            updateFormData('contact', value);
+          }}
+          maxLength={11}
         />
         {errors.contact && <p className="apply-error">{errors.contact}</p>}
+        {!errors.contact && <p className="apply-hint">숫자만 입력해주세요 (10-11자리)</p>}
       </div>
 
       <div className="apply-input-group">
@@ -187,12 +201,17 @@ const Step3ContactInfo = ({ formData, updateFormData, onPrev, onNext }) => {
         <input
           type="text"
           className={`apply-input ${errors.studentNo ? 'apply-input--error' : ''}`}
-          placeholder="20241234"
+          placeholder="202412345 (20으로 시작)"
           value={formData.studentNo}
-          onChange={(e) => updateFormData('studentNo', e.target.value)}
+          onChange={(e) => {
+            const value = e.target.value.replace(/[^0-9]/g, '');
+            updateFormData('studentNo', value);
+          }}
           onKeyDown={(e) => e.key === 'Enter' && handleNext()}
+          maxLength={9}
         />
         {errors.studentNo && <p className="apply-error">{errors.studentNo}</p>}
+        {!errors.studentNo && <p className="apply-hint">20으로 시작하는 9자리 숫자</p>}
       </div>
 
       <div className="apply-buttons">
